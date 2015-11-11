@@ -53,12 +53,13 @@
                  kc topic
                  (or key-decoder (kafka.consumer/default-decoder))
                  (or value-decoder (kafka.consumer/default-decoder)))
-         buf (async/chan)]
-     (async/pipe buf ch close?)
-     (async/onto-chan buf stream)
+         iter (.iterator stream)]
+     (async/go-loop []
+       (when (and (.hasNext iter) (async/>! ch (.next iter)))
+         (recur)))
      (reify java.io.Closeable
        (close [this]
-         (async/close! buf)
+         (when close? (async/close! ch))
          (kafka.consumer/shutdown kc))))))
 
 (defn topic->reduceable
