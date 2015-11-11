@@ -1,4 +1,4 @@
-(defproject org.clojars.ah45/clj-kafka-util "0.1.0"
+(defproject org.clojars.ah45/clj-kafka-util "0.1.1"
   :description "A collection of utility fns related to clj-kafka"
   :url "https://github.com/ah45/clj-kafka-util"
   :license {:name "Eclipse Public License"
